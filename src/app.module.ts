@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-// import { DatabaseModule } from './database/database.module';
-// import { config } from './ormconfig';
 import { UsersModule } from './users/users.module';
+import { DogModule } from './dog/dog.module';
 
 @Module({
   imports: [
@@ -25,6 +24,7 @@ import { UsersModule } from './users/users.module';
       synchronize: true,
     }),
     UsersModule,
+    DogModule,
   ],
   controllers: [AppController],
   providers: [AppService],
