@@ -10,8 +10,11 @@ import {
 import { UsersService } from './users.service';
 import { User } from './users.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
+
 @UseGuards(AuthGuard('jwt'))
 @Controller('users')
+@ApiTags('user routes')
 export class UsersController {
   constructor(private service: UsersService) {}
   @Get('/')
