@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateUserDTO } from './dto/createUser.dto';
 import { User } from './users.entity';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class UsersService {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  async createUser(user: User): Promise<User> {
+  async createUser(user: CreateUserDTO): Promise<User> {
     return await this.usersRepository.save(user);
   }
 
@@ -17,10 +18,23 @@ export class UsersService {
     return await this.usersRepository.find({ relations: ['dogs'] });
   }
 
-  async getUser(_id: number): Promise<User[]> {
-    return await this.usersRepository.find({
-      select: ['fullName', 'birthday', 'isActive'],
+  async getUser(_id: number): Promise<User> {
+    return await this.usersRepository.findOne({
+      select: ['email', 'id'],
       where: [{ id: _id }],
+      relations: ['dogs'],
+    });
+  }
+
+  async getUserById(_id: number): Promise<User> {
+    return await this.usersRepository.findOne({
+      select: ['id', 'email'],
+      where: [{ id: _id }],
+    });
+  }
+  async getUserByEmail(email: string): Promise<User> {
+    return await this.usersRepository.findOne({
+      where: [{ email: email }],
     });
   }
 
@@ -29,12 +43,6 @@ export class UsersService {
   }
 
   async deleteUser(user: User) {
-    // const userToDelete = await this.usersRepository.findOne({
-    //   where: {
-    //     id: _id,
-    //   },
-    // });
-    // return userToDelete;
     this.usersRepository.delete(user);
   }
 }

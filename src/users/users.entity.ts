@@ -1,20 +1,23 @@
-import { DogEntity } from 'src/dog/dog.entity';
+// import { Dog } from 'src/dog/dog.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-
+import { Exclude } from 'class-transformer';
+import { Dog } from 'src/dog/dog.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 25 })
-  fullName: string;
+  @Column({ unique: true })
+  email: string;
 
-  @Column('date')
-  birthday: Date;
-
+  @Exclude()
   @Column()
-  isActive: boolean;
+  password: string;
 
-  @OneToMany(() => DogEntity, (dog) => dog.user)
-  dogs: DogEntity[];
+  @OneToMany(() => Dog, (dog) => dog.user)
+  dogs: Dog[];
+
+  constructor(partial?: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }

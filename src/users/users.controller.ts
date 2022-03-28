@@ -1,15 +1,16 @@
 import {
   Controller,
-  Post,
   Body,
   Get,
   Put,
   Delete,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
-
+import { AuthGuard } from '@nestjs/passport';
+@UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UsersController {
   constructor(private service: UsersService) {}
@@ -21,12 +22,6 @@ export class UsersController {
   get(@Param() params) {
     // return params.id;
     return this.service.getUser(params.id);
-  }
-
-  @Post()
-  create(@Body() user: User) {
-    // return { user, isUser: true };
-    return this.service.createUser(user);
   }
 
   @Put()
