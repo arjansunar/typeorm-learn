@@ -3,6 +3,8 @@ import { DogService } from './dog.service';
 import { DogDTO } from './dto/dog.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
+// import { Dog } from './dog.entity';
+
 @UseGuards(AuthGuard('jwt'))
 @Controller('dog')
 @ApiTags('Dogs routes')

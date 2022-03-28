@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsInt } from 'class-validator';
-import { ApiParam, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 export class DogDTO {
   @IsNotEmpty()
   @ApiProperty({ type: String, description: 'name for a dog' })
